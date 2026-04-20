@@ -14,11 +14,9 @@
   @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; padding: 20px 16px; } }
   .photo-card { background: #242424; border-radius: 8px; overflow: hidden; }
   .photo-card img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
-  .photo-info { padding: 14px 16px; }
-  .location { font-size: 0.85em; color: #c9a96e; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
-  .location::before { content: "📍 "; }
+  .photo-info { padding: 14px 16px; min-height: 56px; }
+  .caption { font-size: 0.95em; color: #c9b89a; line-height: 1.6; font-style: italic; }
   .loading { text-align: center; padding: 80px 20px; color: #666; font-style: italic; }
-  .empty { text-align: center; padding: 80px 20px; color: #555; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; margin-top: 20px; }
 </style>
 </head>
@@ -27,50 +25,39 @@
   <h1>Quiet Japan</h1>
   <p class="subtitle">Discovering the tranquil beauty of Japan</p>
 </header>
-
 <div class="gallery" id="gallery">
   <div class="loading">Loading photos...</div>
 </div>
-
-<footer>
-  &copy; Quiet Japan — A photo journal of peaceful moments
-</footer>
-
+<footer>&copy; Quiet Japan — A photo journal of peaceful moments</footer>
 <script>
 const REPO = 'ffuyuko78-cpu/-quiet-japan';
-const FOLDER = 'photos';
-
-function toLocation(filename) {
-  return filename
-    .replace(/\.[^.]+$/, '')
-    .replace(/_/g, ' ')
-    .replace(/-/g, ' ');
-}
 
 async function loadPhotos() {
   const gallery = document.getElementById('gallery');
   try {
-    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FOLDER}`);
-    if (!res.ok) throw new Error('no photos yet');
-    const files = await res.json();
+    const [photosRes, captionsRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${REPO}/contents/photos`),
+      fetch(`https://raw.githubusercontent.com/${REPO}/main/captions.json?t=${Date.now()}`)
+    ]);
+    const files = await photosRes.json();
+    const captions = captionsRes.ok ? await captionsRes.json() : {};
     const images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
-    if (images.length === 0) {
-      gallery.innerHTML = '<div class="empty"><p>No photos yet.</p></div>';
+    if (!images.length) {
+      gallery.innerHTML = '<div class="loading">No photos yet.</div>';
       return;
     }
     gallery.innerHTML = images.map(f => `
       <div class="photo-card">
         <img src="${f.download_url}" alt="${f.name}" loading="lazy">
         <div class="photo-info">
-          <div class="location">${toLocation(f.name)}</div>
+          <div class="caption">${captions[f.name] || ''}</div>
         </div>
       </div>
     `).join('');
-  } catch (e) {
-    gallery.innerHTML = '<div class="empty"><p>No photos yet.</p></div>';
+  } catch(e) {
+    gallery.innerHTML = '<div class="loading">Could not load photos.</div>';
   }
 }
-
 loadPhotos();
 </script>
 </body>
