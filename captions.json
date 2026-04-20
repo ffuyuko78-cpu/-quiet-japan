@@ -1,3 +1,6 @@
 {
-  "kimono.png": "A graceful figure in traditional red kimono, embodying the timeless elegance of Japan."
+  "kimono.png": {
+    "en": "A graceful figure in traditional red kimono, embodying the timeless elegance of Japan.",
+    "ja": "伝統的な赤い着物をまとった優雅な姿。日本の永遠の美しさを体現しています。"
+  }
 }
