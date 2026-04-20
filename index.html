@@ -5,15 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiet Japan</title>
 <style>
-  body { font-family: Georgia, serif; max-width: 800px; margin: 0 auto; padding: 40px 20px; background: #f9f7f4; color: #333; }
-  h1 { font-size: 2.5em; color: #2c2c2c; border-bottom: 2px solid #c9a96e; padding-bottom: 10px; }
-  p { line-height: 1.8; font-size: 1.1em; }
-  .subtitle { color: #888; font-style: italic; margin-top: -10px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: #1a1a1a; color: #e8e0d5; min-height: 100vh; }
+  header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #333; }
+  h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .subtitle { color: #888; font-style: italic; font-size: 1.1em; }
+  .gallery { column-count: 3; column-gap: 12px; padding: 24px; max-width: 1200px; margin: 0 auto; }
+  @media (max-width: 768px) { .gallery { column-count: 2; } }
+  @media (max-width: 480px) { .gallery { column-count: 1; } }
+  .photo-item { break-inside: avoid; margin-bottom: 12px; overflow: hidden; border-radius: 4px; }
+  .photo-item img { width: 100%; display: block; transition: transform 0.3s ease; }
+  .photo-item img:hover { transform: scale(1.02); }
+  .loading { text-align: center; padding: 80px 20px; color: #666; font-style: italic; }
+  .empty { text-align: center; padding: 80px 20px; color: #555; }
+  .empty p { font-size: 1.1em; margin-bottom: 10px; }
+  footer { text-align: center; padding: 40px; color: #555; font-size: 0.9em; border-top: 1px solid #222; margin-top: 40px; }
 </style>
 </head>
 <body>
-<h1>Quiet Japan</h1>
-<p class="subtitle">Discovering the tranquil beauty of Japan</p>
-<p>Welcome to Quiet Japan — a photo journal capturing the serene landscapes, hidden temples, and peaceful moments of everyday life in Japan.</p>
+<header>
+  <h1>Quiet Japan</h1>
+  <p class="subtitle">Discovering the tranquil beauty of Japan</p>
+</header>
+
+<div class="gallery" id="gallery">
+  <div class="loading">Loading photos...</div>
+</div>
+
+<footer>
+  &copy; Quiet Japan — A photo journal of peaceful moments
+</footer>
+
+<script>
+const REPO = 'ffuyuko78-cpu/-quiet-japan';
+const FOLDER = 'photos';
+
+async function loadPhotos() {
+  const gallery = document.getElementById('gallery');
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FOLDER}`);
+    if (!res.ok) throw new Error('no photos yet');
+    const files = await res.json();
+    const images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
+    if (images.length === 0) {
+      gallery.innerHTML = '<div class="empty"><p>No photos yet.</p><p style="color:#444">Photos will appear here once uploaded.</p></div>';
+      return;
+    }
+    gallery.innerHTML = images.map(f => `
+      <div class="photo-item">
+        <img src="${f.download_url}" alt="${f.name}" loading="lazy">
+      </div>
+    `).join('');
+  } catch (e) {
+    gallery.innerHTML = '<div class="empty"><p>No photos yet.</p><p style="color:#444">Photos will appear here once uploaded to the photos folder.</p></div>';
+  }
+}
+
+loadPhotos();
+</script>
 </body>
 </html>
