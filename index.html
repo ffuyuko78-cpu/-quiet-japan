@@ -10,16 +10,16 @@
   header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #333; }
   h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
   .subtitle { color: #888; font-style: italic; font-size: 1.1em; }
-  .gallery { column-count: 3; column-gap: 12px; padding: 24px; max-width: 1200px; margin: 0 auto; }
-  @media (max-width: 768px) { .gallery { column-count: 2; } }
-  @media (max-width: 480px) { .gallery { column-count: 1; } }
-  .photo-item { break-inside: avoid; margin-bottom: 12px; overflow: hidden; border-radius: 4px; }
-  .photo-item img { width: 100%; display: block; transition: transform 0.3s ease; }
-  .photo-item img:hover { transform: scale(1.02); }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; padding: 40px 32px; max-width: 1200px; margin: 0 auto; }
+  @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; padding: 20px 16px; } }
+  .photo-card { background: #242424; border-radius: 8px; overflow: hidden; }
+  .photo-card img { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .photo-info { padding: 14px 16px; }
+  .location { font-size: 0.85em; color: #c9a96e; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .location::before { content: "📍 "; }
   .loading { text-align: center; padding: 80px 20px; color: #666; font-style: italic; }
   .empty { text-align: center; padding: 80px 20px; color: #555; }
-  .empty p { font-size: 1.1em; margin-bottom: 10px; }
-  footer { text-align: center; padding: 40px; color: #555; font-size: 0.9em; border-top: 1px solid #222; margin-top: 40px; }
+  footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -40,6 +40,13 @@
 const REPO = 'ffuyuko78-cpu/-quiet-japan';
 const FOLDER = 'photos';
 
+function toLocation(filename) {
+  return filename
+    .replace(/\.[^.]+$/, '')
+    .replace(/_/g, ' ')
+    .replace(/-/g, ' ');
+}
+
 async function loadPhotos() {
   const gallery = document.getElementById('gallery');
   try {
@@ -48,16 +55,19 @@ async function loadPhotos() {
     const files = await res.json();
     const images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
     if (images.length === 0) {
-      gallery.innerHTML = '<div class="empty"><p>No photos yet.</p><p style="color:#444">Photos will appear here once uploaded.</p></div>';
+      gallery.innerHTML = '<div class="empty"><p>No photos yet.</p></div>';
       return;
     }
     gallery.innerHTML = images.map(f => `
-      <div class="photo-item">
+      <div class="photo-card">
         <img src="${f.download_url}" alt="${f.name}" loading="lazy">
+        <div class="photo-info">
+          <div class="location">${toLocation(f.name)}</div>
+        </div>
       </div>
     `).join('');
   } catch (e) {
-    gallery.innerHTML = '<div class="empty"><p>No photos yet.</p><p style="color:#444">Photos will appear here once uploaded to the photos folder.</p></div>';
+    gallery.innerHTML = '<div class="empty"><p>No photos yet.</p></div>';
   }
 }
 
