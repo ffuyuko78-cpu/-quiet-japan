@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
 <title>Quiet Japan</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,28 +38,30 @@ async function loadPhotos() {
   const gallery = document.getElementById('gallery');
   try {
     const [photosRes, captionsRes] = await Promise.all([
-      fetch(`https://api.github.com/repos/${REPO}/contents/photos`),
-      fetch(`https://raw.githubusercontent.com/${REPO}/main/captions.json?t=${Date.now()}`)
+      fetch('https://api.github.com/repos/' + REPO + '/contents/photos'),
+      fetch('https://raw.githubusercontent.com/' + REPO + '/main/captions.json?t=' + Date.now())
     ]);
     const files = await photosRes.json();
     const captions = captionsRes.ok ? await captionsRes.json() : {};
-    const images = files.filter(f => /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name));
+    const images = files.filter(function(f) { return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name); });
     if (!images.length) {
       gallery.innerHTML = '<div class="loading">No photos yet.</div>';
       return;
     }
-    gallery.innerHTML = images.map(f => {
-      const cap = captions[f.name] || {};
-      return `
-        <div class="photo-card">
-          <img src="${f.download_url}" alt="${f.name}" loading="lazy">
-          <div class="photo-info">
-            ${cap.en ? `<div class="caption-en">${cap.en}</div>` : ''}
-            ${cap.ja ? `<div class="caption-ja">${cap.ja}</div>` : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
+    var html = '';
+    for (var i = 0; i < images.length; i++) {
+      var f = images[i];
+      var cap = captions[f.name];
+      var enText = (cap && cap.en) ? cap.en : '';
+      var jaText = (cap && cap.ja) ? cap.ja : '';
+      html += '<div class="photo-card">';
+      html += '<img src="' + f.download_url + '" alt="' + f.name + '" loading="lazy">';
+      html += '<div class="photo-info">';
+      if (enText) html += '<div class="caption-en">' + enText + '</div>';
+      if (jaText) html += '<div class="caption-ja">' + jaText + '</div>';
+      html += '</div></div>';
+    }
+    gallery.innerHTML = html;
   } catch(e) {
     gallery.innerHTML = '<div class="loading">Could not load photos.</div>';
   }
