@@ -7,18 +7,18 @@
 <title>Quiet Japan</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Georgia, serif; background: #f5f0ea; color: #333; min-height: 100vh; }
-  header { text-align: center; padding: 60px 20px 40px; border-bottom: 2px solid #c9a96e; background: #fff; }
-  h1 { font-size: 2.8em; color: #2c2c2c; letter-spacing: 0.1em; margin-bottom: 8px; }
-  .subtitle { color: #999; font-style: italic; font-size: 1.1em; }
-  .gallery { max-width: 700px; margin: 0 auto; padding: 40px 20px; }
-  .photo-card { background: #fff; border-radius: 4px; margin-bottom: 48px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
-  .photo-card img { width: 100%; display: block; }
-  .photo-info { padding: 20px 24px 24px; }
-  .caption-en { font-size: 1.05em; color: #444; line-height: 1.7; font-style: italic; }
-  .caption-ja { font-size: 0.85em; color: #999; line-height: 1.6; margin-top: 8px; }
-  .loading { text-align: center; padding: 80px 20px; color: #999; font-style: italic; }
-  footer { text-align: center; padding: 40px; color: #bbb; font-size: 0.9em; border-top: 1px solid #e0d8ce; background: #fff; }
+  body { font-family: Georgia, serif; background: #111; color: #e8e0d5; min-height: 100vh; }
+  header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #333; }
+  h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .subtitle { color: #888; font-style: italic; font-size: 1.1em; }
+  .gallery { max-width: 680px; margin: 0 auto; padding: 48px 20px; }
+  .photo-card { margin-bottom: 56px; }
+  .photo-card img { width: 100%; display: block; border-radius: 4px; }
+  .photo-info { padding: 16px 4px 0; }
+  .caption-en { font-size: 1em; color: #c9b89a; line-height: 1.7; font-style: italic; }
+  .caption-ja { font-size: 0.82em; color: #555; line-height: 1.6; margin-top: 6px; }
+  .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
+  footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
 </style>
 </head>
 <body>
@@ -32,17 +32,15 @@
 <footer>&copy; Quiet Japan — A photo journal of peaceful moments</footer>
 <script>
 var REPO = 'ffuyuko78-cpu/-quiet-japan';
-
 function loadPhotos() {
   var gallery = document.getElementById('gallery');
-  var p1 = fetch('https://api.github.com/repos/' + REPO + '/contents/photos');
-  var p2 = fetch('https://raw.githubusercontent.com/' + REPO + '/main/captions.json?t=' + Date.now());
-  Promise.all([p1, p2]).then(function(responses) {
-    return Promise.all([responses[0].json(), responses[1].ok ? responses[1].json() : {}]);
-  }).then(function(data) {
+  Promise.all([
+    fetch('https://api.github.com/repos/' + REPO + '/contents/photos').then(function(r){ return r.json(); }),
+    fetch('https://raw.githubusercontent.com/' + REPO + '/main/captions.json?t=' + Date.now()).then(function(r){ return r.ok ? r.json() : {}; })
+  ]).then(function(data) {
     var files = data[0];
     var captions = data[1];
-    var images = files.filter(function(f) { return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name); });
+    var images = files.filter(function(f){ return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name); });
     if (!images.length) { gallery.innerHTML = '<div class="loading">No photos yet.</div>'; return; }
     var html = '';
     for (var i = 0; i < images.length; i++) {
@@ -56,9 +54,7 @@ function loadPhotos() {
       html += '</div></div>';
     }
     gallery.innerHTML = html;
-  }).catch(function() {
-    gallery.innerHTML = '<div class="loading">Could not load photos.</div>';
-  });
+  }).catch(function(){ gallery.innerHTML = '<div class="loading">Could not load photos.</div>'; });
 }
 loadPhotos();
 </script>
