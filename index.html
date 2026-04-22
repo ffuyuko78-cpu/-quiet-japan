@@ -11,12 +11,50 @@
   header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #333; }
   h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
   .subtitle { color: #888; font-style: italic; font-size: 1.1em; }
-  .gallery { max-width: 680px; margin: 0 auto; padding: 48px 20px; }
-  .photo-card { margin-bottom: 56px; }
-  .photo-card img { width: 70%; display: block; border-radius: 4px; margin: 0 auto; }
-  .photo-info { padding: 16px 4px 0; }
-  .caption-en { font-size: 1em; color: #c9b89a; line-height: 1.7; font-style: italic; }
-  .caption-ja { font-size: 0.82em; color: #555; line-height: 1.6; margin-top: 6px; }
+  .gallery { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
+  .photo-card { margin-bottom: 72px; }
+
+  .tag-row { margin-bottom: 10px; }
+  .season-tag {
+    display: inline-block;
+    font-size: 0.85em;
+    color: #c9b89a;
+    letter-spacing: 0.08em;
+    background: rgba(201,184,154,0.12);
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(201,184,154,0.3);
+  }
+
+  .photo-row { display: flex; align-items: stretch; gap: 20px; }
+  .photo-wrap { position: relative; width: 72%; flex-shrink: 0; }
+  .photo-wrap img { width: 100%; height: 520px; object-fit: cover; border-radius: 4px; display: block; }
+
+  .guide-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    padding-bottom: 8px;
+  }
+  .guide-character { width: 100%; max-width: 130px; opacity: 0.9; }
+  .guide-name {
+    font-size: 0.75em;
+    color: #d4c8c0;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(212,200,192,0.4);
+    border-radius: 20px;
+    padding: 6px 14px;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .photo-info { padding: 28px 4px 0; }
+  .caption-en { font-size: 1em; color: #d4c8c0; line-height: 1.7; font-style: italic; }
+  .caption-ja { font-size: 0.82em; color: #888; line-height: 1.6; margin-top: 6px; }
+
   .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
 </style>
@@ -32,6 +70,9 @@
 <footer>&copy; Quiet Japan — A photo journal of peaceful moments</footer>
 <script>
 var REPO = 'ffuyuko78-cpu/-quiet-japan';
+var GUIDE_URL = 'https://raw.githubusercontent.com/' + REPO + '/main/photos/kimono.png';
+var SHOW_ONLY = ['DSC_0024.JPG'];
+
 function loadPhotos() {
   var gallery = document.getElementById('gallery');
   Promise.all([
@@ -40,17 +81,30 @@ function loadPhotos() {
   ]).then(function(data) {
     var files = data[0];
     var captions = data[1];
-    var images = files.filter(function(f){ return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name); });
+    var images = files.filter(function(f){
+      return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name) && f.name !== 'kimono.png';
+    });
+    images = images.filter(function(f){ return SHOW_ONLY.indexOf(f.name) !== -1; });
     if (!images.length) { gallery.innerHTML = '<div class="loading">No photos yet.</div>'; return; }
     var html = '';
     for (var i = 0; i < images.length; i++) {
       var f = images[i];
       var cap = captions[f.name] || {};
+      var season = cap.season || '';
+      var en = cap.en ? '👘 ' + cap.en : '';
+      var ja = cap.ja ? '👘 ' + cap.ja : '';
       html += '<div class="photo-card">';
-      html += '<img src="' + f.download_url + '" alt="">';
+      if (season) html += '<div class="tag-row"><span class="season-tag">' + season + '</span></div>';
+      html += '<div class="photo-row">';
+      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt=""></div>';
+      html += '<div class="guide-wrapper">';
+      html += '<img class="guide-character" src="' + GUIDE_URL + '" alt="もみじ">';
+      html += '<div class="guide-name">案内人&nbsp;&nbsp;&nbsp;&nbsp;もみじ</div>';
+      html += '</div>';
+      html += '</div>';
       html += '<div class="photo-info">';
-      if (cap.en) html += '<div class="caption-en">' + cap.en + '</div>';
-      if (cap.ja) html += '<div class="caption-ja">' + cap.ja + '</div>';
+      if (en) html += '<div class="caption-en">' + en + '</div>';
+      if (ja) html += '<div class="caption-ja">' + ja + '</div>';
       html += '</div></div>';
     }
     gallery.innerHTML = html;
