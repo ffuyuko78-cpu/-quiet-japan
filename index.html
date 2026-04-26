@@ -84,7 +84,7 @@ function loadPhotos() {
     var images = files.filter(function(f){
       return /\.(jpg|jpeg|png|gif|webp)$/i.test(f.name) && f.name !== 'kimono.png';
     });
-    images = images.filter(function(f){ return SHOW_ONLY.indexOf(f.name) !== -1; });
+    if (SHOW_ONLY.length > 0) { images = images.filter(function(f){ return SHOW_ONLY.indexOf(f.name) !== -1; }); }
     if (!images.length) { gallery.innerHTML = '<div class="loading">No photos yet.</div>'; return; }
     var html = '';
     for (var i = 0; i < images.length; i++) {
