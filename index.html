@@ -19,11 +19,50 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, serif; background: #111; color: #e8e0d5; min-height: 100vh; }
-  header { text-align: center; padding: 60px 20px 40px; border-bottom: 1px solid #333; }
-  h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
-  .subtitle { color: #888; font-style: italic; font-size: 1.1em; }
+
+  /* Header */
+  header { text-align: center; padding: 72px 20px 32px; border-bottom: 1px solid #2a2a2a; }
+  h1 { font-size: 3em; color: #e8e0d5; letter-spacing: 0.15em; margin-bottom: 10px; font-weight: normal; }
+  .subtitle { color: #666; font-style: italic; font-size: 1.05em; letter-spacing: 0.05em; }
+
+  /* About */
+  .about {
+    max-width: 600px;
+    margin: 36px auto 0;
+    padding: 0 20px;
+    text-align: center;
+    color: #7a7068;
+    font-size: 0.92em;
+    line-height: 1.8;
+  }
+
+  /* Season Nav */
+  .season-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px 20px 0;
+    flex-wrap: wrap;
+  }
+  .season-btn {
+    background: none;
+    border: 1px solid #333;
+    color: #888;
+    font-family: Georgia, serif;
+    font-size: 0.85em;
+    padding: 7px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .season-btn:hover { border-color: #c9b89a; color: #c9b89a; }
+  .season-btn.active { background: rgba(201,184,154,0.15); border-color: #c9b89a; color: #c9b89a; }
+
+  /* Gallery */
   .gallery { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
   .photo-card { margin-bottom: 72px; }
+  .photo-card.hidden { display: none; }
 
   .tag-row { margin-bottom: 10px; }
   .season-tag {
@@ -66,9 +105,11 @@
   .caption-en { font-size: 1em; color: #d4c8c0; line-height: 1.7; font-style: italic; }
   .caption-ja { font-size: 0.82em; color: #888; line-height: 1.6; margin-top: 6px; }
 
+  .no-results { text-align: center; padding: 60px 20px; color: #444; font-style: italic; }
   .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
 
+  /* Coming Soon */
   .coming-soon {
     max-width: 720px;
     margin: 0 auto 60px;
@@ -81,12 +122,9 @@
     margin-bottom: 20px;
     padding-bottom: 12px;
     border-bottom: 1px solid #333;
+    font-weight: normal;
   }
-  .koyo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
+  .koyo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .koyo-region h3 {
     font-size: 0.9em;
     color: #c9b89a;
@@ -94,10 +132,7 @@
     margin-bottom: 12px;
     text-transform: uppercase;
   }
-  .koyo-region ul {
-    list-style: none;
-    padding: 0;
-  }
+  .koyo-region ul { list-style: none; padding: 0; }
   .koyo-region ul li {
     font-size: 0.88em;
     color: #777;
@@ -105,32 +140,35 @@
     border-bottom: 1px solid #222;
     line-height: 1.5;
   }
-  .koyo-region ul li strong {
-    color: #aaa;
-    display: block;
-  }
-  .koyo-note {
-    margin-top: 20px;
-    font-size: 0.82em;
-    color: #555;
-    font-style: italic;
-  }
+  .koyo-region ul li strong { color: #aaa; display: block; }
+  .koyo-note { margin-top: 20px; font-size: 0.82em; color: #555; font-style: italic; }
   @media (max-width: 500px) {
     .koyo-grid { grid-template-columns: 1fr; }
+    .photo-row { flex-direction: column; }
+    .photo-wrap { width: 100%; }
   }
 </style>
 </head>
 <body>
 <header>
   <h1>Quiet Japan</h1>
-  <p class="subtitle">Discovering the tranquil beauty of Japan</p>
+  <p class="subtitle">静かな日本 — a photo journal of peaceful moments</p>
+  <p class="about">Japan holds a quieter side — gardens at dawn, temple paths in autumn, the stillness between seasons. This is a journal of those moments, seen slowly.</p>
 </header>
+
+<nav class="season-nav">
+  <button class="season-btn active" data-season="all">All</button>
+  <button class="season-btn" data-season="Spring">🌸 Spring</button>
+  <button class="season-btn" data-season="Autumn">🍂 Autumn</button>
+  <button class="season-btn" data-season="Winter">❄️ Winter</button>
+</nav>
+
 <div class="gallery" id="gallery">
   <div class="loading">Loading photos...</div>
 </div>
 
 <section class="coming-soon">
-  <h2>🍂 Coming Soon — Ginkgo & Autumn Foliage 2025</h2>
+  <h2>🍂 Coming Soon — Ginkgo &amp; Autumn Foliage 2025</h2>
   <div class="koyo-grid">
     <div class="koyo-region">
       <h3>Tokyo · 東京</h3>
@@ -161,6 +199,30 @@
 var REPO = 'ffuyuko78-cpu/-quiet-japan';
 var GUIDE_URL = 'https://raw.githubusercontent.com/' + REPO + '/main/photos/kimono.png';
 var SHOW_ONLY = [];
+var allCards = [];
+
+function applyFilter(season) {
+  var shown = 0;
+  for (var i = 0; i < allCards.length; i++) {
+    var card = allCards[i];
+    if (season === 'all' || card.dataset.season.indexOf(season) !== -1) {
+      card.classList.remove('hidden');
+      shown++;
+    } else {
+      card.classList.add('hidden');
+    }
+  }
+  var noResults = document.getElementById('no-results');
+  if (noResults) noResults.style.display = shown ? 'none' : 'block';
+}
+
+document.querySelectorAll('.season-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.season-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    applyFilter(btn.dataset.season);
+  });
+});
 
 function loadPhotos() {
   var gallery = document.getElementById('gallery');
@@ -175,28 +237,38 @@ function loadPhotos() {
     });
     if (SHOW_ONLY.length > 0) { images = images.filter(function(f){ return SHOW_ONLY.indexOf(f.name) !== -1; }); }
     if (!images.length) { gallery.innerHTML = '<div class="loading">No photos yet.</div>'; return; }
-    var html = '';
+    gallery.innerHTML = '';
     for (var i = 0; i < images.length; i++) {
       var f = images[i];
       var cap = captions[f.name] || {};
       var season = cap.season || '';
       var en = cap.en ? '👘 ' + cap.en : '';
       var ja = cap.ja ? '👘 ' + cap.ja : '';
-      html += '<div class="photo-card">';
+      var div = document.createElement('div');
+      div.className = 'photo-card';
+      div.dataset.season = season;
+      var html = '';
       if (season) html += '<div class="tag-row"><span class="season-tag">' + season + '</span></div>';
       html += '<div class="photo-row">';
-      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt="' + (cap.en ? cap.en.substring(0,80) : 'Japan photo') + '"></div>';
+      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt="' + (cap.en ? cap.en.substring(0,80).replace(/"/g,'&quot;') : 'Japan photo') + '" loading="lazy"></div>';
       html += '<div class="guide-wrapper">';
       html += '<img class="guide-character" src="' + GUIDE_URL + '" alt="もみじ">';
       html += '<div class="guide-name">案内人　　　　もみじ</div>';
-      html += '</div>';
-      html += '</div>';
+      html += '</div></div>';
       html += '<div class="photo-info">';
       if (en) html += '<div class="caption-en">' + en + '</div>';
       if (ja) html += '<div class="caption-ja">' + ja + '</div>';
-      html += '</div></div>';
+      html += '</div>';
+      div.innerHTML = html;
+      gallery.appendChild(div);
+      allCards.push(div);
     }
-    gallery.innerHTML = html;
+    var noRes = document.createElement('div');
+    noRes.id = 'no-results';
+    noRes.className = 'no-results';
+    noRes.style.display = 'none';
+    noRes.textContent = 'No photos in this season yet.';
+    gallery.appendChild(noRes);
   }).catch(function(){ gallery.innerHTML = '<div class="loading">Could not load photos.</div>'; });
 }
 loadPhotos();
