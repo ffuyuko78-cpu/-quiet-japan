@@ -6,7 +6,7 @@
 <meta name="google" content="notranslate">
 <title>Quiet Japan — Peaceful Photos of Japan</title>
 <meta name="description" content="Quiet Japan — a photo journal of peaceful moments in Japan. Cherry blossoms, autumn leaves, sumo, temples, food and culture through the seasons.">
-<meta name="keywords" content="Japan photography, Japan travel, cherry blossom, autumn leaves, sumo, Tokyo, Asakusa, Japanese culture, koyo, sakura, Kyoto autumn, Tokyo ginkgo, Showa Kinen Park, Jingu Gaien, Kifune Shrine, Enkoji">
+<meta name="keywords" content="Japan photography, Japan travel, cherry blossom, autumn leaves, sumo, Tokyo, Asakusa, Japanese culture, koyo, sakura, Kyoto autumn, Tokyo ginkgo, Showa Kinen Park, Jingu Gaien, Kifune Shrine, Enkoji, State Guest House, Akasaka Palace, Geihinkan">
 <meta property="og:title" content="Quiet Japan — Peaceful Photos of Japan">
 <meta property="og:description" content="A photo journal of peaceful moments in Japan. Cherry blossoms, autumn leaves, sumo, temples and more.">
 <meta property="og:image" content="https://raw.githubusercontent.com/ffuyuko78-cpu/-quiet-japan/main/photos/DSC_0024.JPG">
@@ -60,10 +60,35 @@
   .caption-ja { font-size: 0.82em; color: #888; line-height: 1.6; margin-top: 6px; }
   .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
+
+  /* Geihinkan info */
+  .geihinkan-info {
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 32px 20px;
+    border: 1px solid #2a2a2a;
+    border-radius: 4px;
+  }
+  .geihinkan-info h2 {
+    font-size: 1.4em;
+    color: #c9a86c;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    font-weight: normal;
+  }
+  .geihinkan-info p {
+    color: #7a7068;
+    font-size: 0.92em;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .geihinkan-note a { color: #c9b89a; text-decoration: none; }
+  .geihinkan-note a:hover { color: #c9a86c; }
   .coming-soon { max-width: 720px; margin: 0 auto 60px; padding: 0 20px; }
   .coming-soon h2 {
     font-size: 1.4em; color: #c9a86c; letter-spacing: 0.08em;
     margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #333;
+    font-weight: normal;
   }
   .koyo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .koyo-region h3 {
@@ -104,16 +129,22 @@
   <div class="loading">Loading photos...</div>
 </div>
 
+<section class="geihinkan-info">
+  <h2>🏛️ 迎賓館赤坂離宮 — Tokyo State Guest House</h2>
+  <p>Built in 1909 during the Meiji era, the Akasaka Palace is Japan’s only Western-style palace — a rare Neo-Baroque masterpiece in the heart of Tokyo. For over a century, it has welcomed world leaders and heads of state, serving as the official state guest house since 1974. Today, visitors can stroll its serene gardens, admire the ornate ironwork gates, and feel the quiet weight of history. Open to the public on select dates throughout the year.</p>
+  <p class="geihinkan-note">📍 <a href="https://maps.google.com/?q=迎賓館赤坂離宮+東京" target="_blank" rel="noopener">迎賓館赤坂離宮 · Minato, Tokyo</a> · <a href="https://www.geihinkan.go.jp/en/" target="_blank" rel="noopener">Official site</a></p>
+</section>
+
 <section class="coming-soon">
   <h2>🍂 Coming Soon — Ginkgo &amp; Autumn Foliage 2025</h2>
   <div class="koyo-grid">
     <div class="koyo-region">
       <h3>Tokyo · 東京</h3>
       <ul>
-        <li><a href="https://maps.google.com/?q=昭和記念公園+東京" target="_blank" rel="noopener"><strong>🌟 Showa Kinen Park · 昭和記念公園</strong>Tokyo's most iconic ginkgo avenue — a tunnel of pure gold</a></li>
+        <li><a href="https://maps.google.com/?q=昭和記念公園+東京" target="_blank" rel="noopener"><strong>🌟 Showa Kinen Park · 昭和記念公園</strong>Tokyo’s most iconic ginkgo avenue — a tunnel of pure gold</a></li>
         <li><a href="https://maps.google.com/?q=神宮外苑+東京" target="_blank" rel="noopener"><strong>🌟 Jingu Gaien · 神宮外苑</strong>The legendary ginkgo boulevard that defines Tokyo autumn</a></li>
         <li><a href="https://maps.google.com/?q=六義園+東京" target="_blank" rel="noopener"><strong>Rikugien · 六義園</strong>A stroll garden where autumn reflects in still water</a></li>
-        <li><a href="https://maps.google.com/?q=等々力渣谷+東京" target="_blank" rel="noopener"><strong>Todoroki Valley · 等々力渣谷</strong>Tokyo's only ravine — a hidden world of moss and maple</a></li>
+        <li><a href="https://maps.google.com/?q=等々力渓谷+東京" target="_blank" rel="noopener"><strong>Todoroki Valley · 等々力渓谷</strong>Tokyo’s only ravine — a hidden world of moss and maple</a></li>
         <li><a href="https://maps.google.com/?q=新宿御苑+東京" target="_blank" rel="noopener"><strong>Shinjuku Gyoen · 新宿御苑</strong>Layers of color across a vast, peaceful landscape</a></li>
       </ul>
     </div>
@@ -124,7 +155,7 @@
         <li><a href="https://maps.google.com/?q=貴装神社+京都" target="_blank" rel="noopener"><strong>Kifune Shrine · 貴装神社</strong>Morning light through maples along a mossy path</a></li>
         <li><a href="https://maps.google.com/?q=永観堂+京都" target="_blank" rel="noopener"><strong>Eikando · 永観堂</strong>The temple of autumn leaves — colors reflected in the pond</a></li>
         <li><a href="https://maps.google.com/?q=東福寺+京都" target="_blank" rel="noopener"><strong>Tofukuji · 東福寺</strong>A sea of crimson maple seen from the Tsutenkyo bridge</a></li>
-        <li><a href="https://maps.google.com/?q=哲学の道+京都" target="_blank" rel="noopener"><strong>Philosopher's Path · 哲学の道</strong>A quiet canal walk lined with autumn trees</a></li>
+        <li><a href="https://maps.google.com/?q=哲学の道+京都" target="_blank" rel="noopener"><strong>Philosopher’s Path · 哲学の道</strong>A quiet canal walk lined with autumn trees</a></li>
       </ul>
     </div>
   </div>
