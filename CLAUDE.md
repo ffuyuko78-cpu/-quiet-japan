@@ -9,6 +9,9 @@ Quiet Japan — 日本の風景・文化を紹介する英語向けフォトギ�
 ## 開発ブランチ
 `claude/magical-planck-vywhpf`
 
+## 公開サイト
+https://ffuyuko78-cpu.github.io/-quiet-japan/
+
 ## ホテル（確定）スペイン旅行 2026-06-24〜06-29
 - マドリード: SENATOR BARAJAS / TEL: 91-7471-355 / チェックイン 6/25
 - サラゴサ: EUROSTARS REY FERNANDO / TEL: 876-269526 / チェックイン 6/26
@@ -21,4 +24,6 @@ Quiet Japan — 日本の風景・文化を紹介する英語向けフォトギ�
 ## やること（未完了）
 - [ ] 衣類リスト作成（6月20日以降に天気確認してから）
 - [ ] 格安SIMリサーチ（楽天海外SIM保有済み、追加不要の可能性高い）
-- [ ] 日程表呼び込みボタンを海外旅行アプリに追加
+- [ ] Google Search Console登録
+- [ ] Reddit・ Pinterestへの投稿
+- [ ] 級葉写真を撮り次第サイトに追加
