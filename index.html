@@ -212,7 +212,8 @@ function loadPhotos() {
       html += '<div class="photo-card" data-season="' + season + '">';
       if (season) html += '<div class="tag-row"><span class="season-tag">' + season + '</span></div>';
       html += '<div class="photo-row">';
-      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt="' + (cap.en ? cap.en.substring(0,80) : 'Japan photo') + '"></div>';
+      var fit = f.name.indexOf('東京_') === 0 ? ' style="height:auto;"' : '';
+      html += '<div class="photo-wrap"><img src="' + f.download_url + '"' + fit + ' alt="' + (cap.en ? cap.en.substring(0,80) : 'Japan photo') + '"></div>';
       html += '<div class="guide-wrapper">';
       html += '<img class="guide-character" src="' + GUIDE_URL + '" alt="もみじ">';
       html += '<div class="guide-name">案内人　　　　もみじ</div>';
