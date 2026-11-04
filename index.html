@@ -19,128 +19,65 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Georgia, serif; background: #111; color: #e8e0d5; min-height: 100vh; }
-
-  /* Header */
-  header { text-align: center; padding: 72px 20px 32px; border-bottom: 1px solid #2a2a2a; }
-  h1 { font-size: 3em; color: #e8e0d5; letter-spacing: 0.15em; margin-bottom: 10px; font-weight: normal; }
-  .subtitle { color: #666; font-style: italic; font-size: 1.05em; letter-spacing: 0.05em; }
-
-  /* About */
-  .about {
-    max-width: 600px;
-    margin: 36px auto 0;
-    padding: 0 20px;
-    text-align: center;
-    color: #7a7068;
-    font-size: 0.92em;
-    line-height: 1.8;
-  }
-
-  /* Season Nav */
-  .season-nav {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 32px 20px 0;
-    flex-wrap: wrap;
-  }
+  header { text-align: center; padding: 60px 20px 32px; border-bottom: 1px solid #333; }
+  h1 { font-size: 2.8em; color: #e8e0d5; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .subtitle { color: #888; font-style: italic; font-size: 1.1em; margin-bottom: 16px; }
+  .about { max-width: 520px; margin: 0 auto; font-size: 0.88em; color: #666; line-height: 1.8; }
+  .season-nav { text-align: center; padding: 24px 20px 0; }
   .season-btn {
-    background: none;
-    border: 1px solid #333;
-    color: #888;
-    font-family: Georgia, serif;
-    font-size: 0.85em;
-    padding: 7px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: all 0.2s;
+    background: none; border: 1px solid #333; color: #777;
+    padding: 6px 18px; margin: 4px; border-radius: 20px;
+    font-family: Georgia, serif; font-size: 0.85em; cursor: pointer;
+    letter-spacing: 0.05em; transition: all 0.2s;
   }
-  .season-btn:hover { border-color: #c9b89a; color: #c9b89a; }
-  .season-btn.active { background: rgba(201,184,154,0.15); border-color: #c9b89a; color: #c9b89a; }
-
-  /* Gallery */
+  .season-btn:hover, .season-btn.active {
+    border-color: #c9b89a; color: #c9b89a; background: rgba(201,184,154,0.08);
+  }
   .gallery { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
   .photo-card { margin-bottom: 72px; }
   .photo-card.hidden { display: none; }
-
   .tag-row { margin-bottom: 10px; }
   .season-tag {
-    display: inline-block;
-    font-size: 0.85em;
-    color: #c9b89a;
-    letter-spacing: 0.08em;
-    background: rgba(201,184,154,0.12);
-    padding: 3px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(201,184,154,0.3);
+    display: inline-block; font-size: 0.85em; color: #c9b89a;
+    letter-spacing: 0.08em; background: rgba(201,184,154,0.12);
+    padding: 3px 12px; border-radius: 20px; border: 1px solid rgba(201,184,154,0.3);
   }
-
   .photo-row { display: flex; align-items: stretch; gap: 20px; }
   .photo-wrap { position: relative; width: 72%; flex-shrink: 0; }
   .photo-wrap img { width: 100%; height: 520px; object-fit: cover; border-radius: 4px; display: block; }
-
   .guide-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    flex: 1;
-    padding-bottom: 8px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: flex-end; flex: 1; padding-bottom: 8px;
   }
   .guide-character { width: 100%; max-width: 130px; opacity: 0.9; }
   .guide-name {
-    font-size: 0.75em;
-    color: #d4c8c0;
-    margin-top: 16px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(212,200,192,0.4);
-    border-radius: 20px;
-    padding: 6px 14px;
-    white-space: nowrap;
-    letter-spacing: 0.05em;
+    font-size: 0.75em; color: #d4c8c0; margin-top: 16px;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(212,200,192,0.4);
+    border-radius: 20px; padding: 6px 14px; white-space: nowrap; letter-spacing: 0.05em;
   }
-
   .photo-info { padding: 28px 4px 0; }
   .caption-en { font-size: 1em; color: #d4c8c0; line-height: 1.7; font-style: italic; }
   .caption-ja { font-size: 0.82em; color: #888; line-height: 1.6; margin-top: 6px; }
-
-  .no-results { text-align: center; padding: 60px 20px; color: #444; font-style: italic; }
   .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
-
-  /* Coming Soon */
-  .coming-soon {
-    max-width: 720px;
-    margin: 0 auto 60px;
-    padding: 0 20px;
-  }
+  .coming-soon { max-width: 720px; margin: 0 auto 60px; padding: 0 20px; }
   .coming-soon h2 {
-    font-size: 1.4em;
-    color: #c9a86c;
-    letter-spacing: 0.08em;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #333;
-    font-weight: normal;
+    font-size: 1.4em; color: #c9a86c; letter-spacing: 0.08em;
+    margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #333;
   }
   .koyo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .koyo-region h3 {
-    font-size: 0.9em;
-    color: #c9b89a;
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-    text-transform: uppercase;
+    font-size: 0.9em; color: #c9b89a; letter-spacing: 0.1em;
+    margin-bottom: 12px; text-transform: uppercase;
   }
   .koyo-region ul { list-style: none; padding: 0; }
   .koyo-region ul li {
-    font-size: 0.88em;
-    color: #777;
-    padding: 6px 0;
-    border-bottom: 1px solid #222;
-    line-height: 1.5;
+    font-size: 0.88em; color: #777; padding: 6px 0;
+    border-bottom: 1px solid #222; line-height: 1.5;
   }
   .koyo-region ul li strong { color: #aaa; display: block; }
+  .koyo-region ul li a { color: inherit; text-decoration: none; }
+  .koyo-region ul li a:hover strong { color: #c9a86c; }
   .koyo-note { margin-top: 20px; font-size: 0.82em; color: #555; font-style: italic; }
   @media (max-width: 500px) {
     .koyo-grid { grid-template-columns: 1fr; }
@@ -173,21 +110,21 @@
     <div class="koyo-region">
       <h3>Tokyo · 東京</h3>
       <ul>
-        <li><strong>🌟 Showa Kinen Park · 昭和記念公園</strong>Tokyo's most iconic ginkgo avenue — a tunnel of pure gold</li>
-        <li><strong>🌟 Jingu Gaien · 神宮外苑</strong>The legendary ginkgo boulevard that defines Tokyo autumn</li>
-        <li><strong>Rikugien · 六義園</strong>A stroll garden where autumn reflects in still water</li>
-        <li><strong>Todoroki Valley · 等々力渓谷</strong>Tokyo's only ravine — a hidden world of moss and maple</li>
-        <li><strong>Shinjuku Gyoen · 新宿御苑</strong>Layers of color across a vast, peaceful landscape</li>
+        <li><a href="https://maps.google.com/?q=昭和記念公園+東京" target="_blank" rel="noopener"><strong>🌟 Showa Kinen Park · 昭和記念公園</strong>Tokyo's most iconic ginkgo avenue — a tunnel of pure gold</a></li>
+        <li><a href="https://maps.google.com/?q=神宮外苑+東京" target="_blank" rel="noopener"><strong>🌟 Jingu Gaien · 神宮外苑</strong>The legendary ginkgo boulevard that defines Tokyo autumn</a></li>
+        <li><a href="https://maps.google.com/?q=六義園+東京" target="_blank" rel="noopener"><strong>Rikugien · 六義園</strong>A stroll garden where autumn reflects in still water</a></li>
+        <li><a href="https://maps.google.com/?q=等々力渣谷+東京" target="_blank" rel="noopener"><strong>Todoroki Valley · 等々力渣谷</strong>Tokyo's only ravine — a hidden world of moss and maple</a></li>
+        <li><a href="https://maps.google.com/?q=新宿御苑+東京" target="_blank" rel="noopener"><strong>Shinjuku Gyoen · 新宿御苑</strong>Layers of color across a vast, peaceful landscape</a></li>
       </ul>
     </div>
     <div class="koyo-region">
       <h3>Kyoto · 京都</h3>
       <ul>
-        <li><strong>Enkoji · 圓光寺</strong>Fallen leaves on moss — a serene hidden temple</li>
-        <li><strong>Kifune Shrine · 貴装神社</strong>Morning light through maples along a mossy path</li>
-        <li><strong>Eikando · 永観堂</strong>The temple of autumn leaves — colors reflected in the pond</li>
-        <li><strong>Tofukuji · 東福寺</strong>A sea of crimson maple seen from the Tsutenkyo bridge</li>
-        <li><strong>Philosopher's Path · 哲学の道</strong>A quiet canal walk lined with autumn trees</li>
+        <li><a href="https://maps.google.com/?q=圓光寺+京都" target="_blank" rel="noopener"><strong>Enkoji · 圓光寺</strong>Fallen leaves on moss — a serene hidden temple</a></li>
+        <li><a href="https://maps.google.com/?q=貴装神社+京都" target="_blank" rel="noopener"><strong>Kifune Shrine · 貴装神社</strong>Morning light through maples along a mossy path</a></li>
+        <li><a href="https://maps.google.com/?q=永観堂+京都" target="_blank" rel="noopener"><strong>Eikando · 永観堂</strong>The temple of autumn leaves — colors reflected in the pond</a></li>
+        <li><a href="https://maps.google.com/?q=東福寺+京都" target="_blank" rel="noopener"><strong>Tofukuji · 東福寺</strong>A sea of crimson maple seen from the Tsutenkyo bridge</a></li>
+        <li><a href="https://maps.google.com/?q=哲学の道+京都" target="_blank" rel="noopener"><strong>Philosopher's Path · 哲学の道</strong>A quiet canal walk lined with autumn trees</a></li>
       </ul>
     </div>
   </div>
@@ -199,28 +136,21 @@
 var REPO = 'ffuyuko78-cpu/-quiet-japan';
 var GUIDE_URL = 'https://raw.githubusercontent.com/' + REPO + '/main/photos/kimono.png';
 var SHOW_ONLY = [];
-var allCards = [];
-
-function applyFilter(season) {
-  var shown = 0;
-  for (var i = 0; i < allCards.length; i++) {
-    var card = allCards[i];
-    if (season === 'all' || card.dataset.season.indexOf(season) !== -1) {
-      card.classList.remove('hidden');
-      shown++;
-    } else {
-      card.classList.add('hidden');
-    }
-  }
-  var noResults = document.getElementById('no-results');
-  if (noResults) noResults.style.display = shown ? 'none' : 'block';
-}
+var currentSeason = 'all';
 
 document.querySelectorAll('.season-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.season-btn').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    applyFilter(btn.dataset.season);
+    currentSeason = btn.dataset.season;
+    document.querySelectorAll('.photo-card').forEach(function(card) {
+      if (currentSeason === 'all') {
+        card.classList.remove('hidden');
+      } else {
+        var tag = card.dataset.season || '';
+        card.classList.toggle('hidden', tag.indexOf(currentSeason) === -1);
+      }
+    });
   });
 });
 
@@ -237,38 +167,28 @@ function loadPhotos() {
     });
     if (SHOW_ONLY.length > 0) { images = images.filter(function(f){ return SHOW_ONLY.indexOf(f.name) !== -1; }); }
     if (!images.length) { gallery.innerHTML = '<div class="loading">No photos yet.</div>'; return; }
-    gallery.innerHTML = '';
+    var html = '';
     for (var i = 0; i < images.length; i++) {
       var f = images[i];
       var cap = captions[f.name] || {};
       var season = cap.season || '';
       var en = cap.en ? '👘 ' + cap.en : '';
       var ja = cap.ja ? '👘 ' + cap.ja : '';
-      var div = document.createElement('div');
-      div.className = 'photo-card';
-      div.dataset.season = season;
-      var html = '';
+      html += '<div class="photo-card" data-season="' + season + '">';
       if (season) html += '<div class="tag-row"><span class="season-tag">' + season + '</span></div>';
       html += '<div class="photo-row">';
-      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt="' + (cap.en ? cap.en.substring(0,80).replace(/"/g,'&quot;') : 'Japan photo') + '" loading="lazy"></div>';
+      html += '<div class="photo-wrap"><img src="' + f.download_url + '" alt="' + (cap.en ? cap.en.substring(0,80) : 'Japan photo') + '"></div>';
       html += '<div class="guide-wrapper">';
       html += '<img class="guide-character" src="' + GUIDE_URL + '" alt="もみじ">';
       html += '<div class="guide-name">案内人　　　　もみじ</div>';
-      html += '</div></div>';
+      html += '</div>';
+      html += '</div>';
       html += '<div class="photo-info">';
       if (en) html += '<div class="caption-en">' + en + '</div>';
       if (ja) html += '<div class="caption-ja">' + ja + '</div>';
-      html += '</div>';
-      div.innerHTML = html;
-      gallery.appendChild(div);
-      allCards.push(div);
+      html += '</div></div>';
     }
-    var noRes = document.createElement('div');
-    noRes.id = 'no-results';
-    noRes.className = 'no-results';
-    noRes.style.display = 'none';
-    noRes.textContent = 'No photos in this season yet.';
-    gallery.appendChild(noRes);
+    gallery.innerHTML = html;
   }).catch(function(){ gallery.innerHTML = '<div class="loading">Could not load photos.</div>'; });
 }
 loadPhotos();
