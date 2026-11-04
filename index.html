@@ -6,7 +6,7 @@
 <meta name="google" content="notranslate">
 <title>Quiet Japan — Peaceful Photos of Japan</title>
 <meta name="description" content="Quiet Japan — a photo journal of peaceful moments in Japan. Cherry blossoms, autumn leaves, sumo, temples, food and culture through the seasons.">
-<meta name="keywords" content="Japan photography, Japan travel, cherry blossom, autumn leaves, sumo, Tokyo, Asakusa, Japanese culture, koyo, sakura">
+<meta name="keywords" content="Japan photography, Japan travel, cherry blossom, autumn leaves, sumo, Tokyo, Asakusa, Japanese culture, koyo, sakura, Kyoto autumn, Tokyo ginkgo, Showa Kinen Park, Jingu Gaien, Kifune Shrine, Enkoji">
 <meta property="og:title" content="Quiet Japan — Peaceful Photos of Japan">
 <meta property="og:description" content="A photo journal of peaceful moments in Japan. Cherry blossoms, autumn leaves, sumo, temples and more.">
 <meta property="og:image" content="https://raw.githubusercontent.com/ffuyuko78-cpu/-quiet-japan/main/photos/DSC_0024.JPG">
@@ -68,6 +68,56 @@
 
   .loading { text-align: center; padding: 80px 20px; color: #555; font-style: italic; }
   footer { text-align: center; padding: 40px; color: #444; font-size: 0.9em; border-top: 1px solid #222; }
+
+  .coming-soon {
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .coming-soon h2 {
+    font-size: 1.4em;
+    color: #c9a86c;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #333;
+  }
+  .koyo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .koyo-region h3 {
+    font-size: 0.9em;
+    color: #c9b89a;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .koyo-region ul {
+    list-style: none;
+    padding: 0;
+  }
+  .koyo-region ul li {
+    font-size: 0.88em;
+    color: #777;
+    padding: 6px 0;
+    border-bottom: 1px solid #222;
+    line-height: 1.5;
+  }
+  .koyo-region ul li strong {
+    color: #aaa;
+    display: block;
+  }
+  .koyo-note {
+    margin-top: 20px;
+    font-size: 0.82em;
+    color: #555;
+    font-style: italic;
+  }
+  @media (max-width: 500px) {
+    .koyo-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -78,6 +128,34 @@
 <div class="gallery" id="gallery">
   <div class="loading">Loading photos...</div>
 </div>
+
+<section class="coming-soon">
+  <h2>🍂 Coming Soon — Ginkgo & Autumn Foliage 2025</h2>
+  <div class="koyo-grid">
+    <div class="koyo-region">
+      <h3>Tokyo · 東京</h3>
+      <ul>
+        <li><strong>🌟 Showa Kinen Park · 昭和記念公園</strong>Tokyo's most iconic ginkgo avenue — a tunnel of pure gold</li>
+        <li><strong>🌟 Jingu Gaien · 神宮外苑</strong>The legendary ginkgo boulevard that defines Tokyo autumn</li>
+        <li><strong>Rikugien · 六義園</strong>A stroll garden where autumn reflects in still water</li>
+        <li><strong>Todoroki Valley · 等々力渓谷</strong>Tokyo's only ravine — a hidden world of moss and maple</li>
+        <li><strong>Shinjuku Gyoen · 新宿御苑</strong>Layers of color across a vast, peaceful landscape</li>
+      </ul>
+    </div>
+    <div class="koyo-region">
+      <h3>Kyoto · 京都</h3>
+      <ul>
+        <li><strong>Enkoji · 圓光寺</strong>Fallen leaves on moss — a serene hidden temple</li>
+        <li><strong>Kifune Shrine · 貴装神社</strong>Morning light through maples along a mossy path</li>
+        <li><strong>Eikando · 永観堂</strong>The temple of autumn leaves — colors reflected in the pond</li>
+        <li><strong>Tofukuji · 東福寺</strong>A sea of crimson maple seen from the Tsutenkyo bridge</li>
+        <li><strong>Philosopher's Path · 哲学の道</strong>A quiet canal walk lined with autumn trees</li>
+      </ul>
+    </div>
+  </div>
+  <p class="koyo-note">✨ Tokyo ginkgo peak: late November — the city turns gold · Kyoto maple peak: mid–late November</p>
+</section>
+
 <footer>&copy; Quiet Japan — A photo journal of peaceful moments</footer>
 <script>
 var REPO = 'ffuyuko78-cpu/-quiet-japan';
